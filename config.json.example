@@ -1,0 +1,27 @@
+{
+  "listen_address": "127.0.0.1:8080",
+  "elasticsearch_url": "http://127.0.0.1:9200",
+  "handlers": {
+    "shell": {
+      "command": "/usr/local/bin/alert"
+    },
+   "hipchat": {
+     "apikey": "abc123",
+     "room": "devops"
+   }
+  },
+  "policies": [{
+    "name": "apache requests",
+    "query": "path:/var/log/apache2/access_log AND @timestamp:{now-1h TO now}",
+    "min_count": 100,
+    "polling_secs": 3600,
+    "handlers": ["shell"]
+  }, {
+    "name": "crawl requests",
+    "query": "path:/var/log/crawler AND @timestamp:{now-5m TO now}",
+    "min_count": 10,
+    "max_count": 100,
+    "polling_secs": 300,
+    "handlers": ["shell", "hipchat"]
+  }]
+}
