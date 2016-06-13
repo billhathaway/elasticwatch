@@ -7,6 +7,13 @@ There are 2 main types used by the Elasticwatch service:
   2. Handlers - logic for handling event state transitions
 
 
+Running:  
+  `elasticwatch`   (use default configuration file config.json)
+  or  
+  `elasticwatch -f /path/to/config.json`
+
+  If there is a problem starting up, a message will go to stderr, otherwise log messages during runtime will be sent to stdout.
+
 Configuration:
   EW uses a JSON configuration file.  
 
@@ -22,12 +29,20 @@ Configuration:
 
   hipchat - uses the HipChat notifications API to send a message
   properties required:
-  * apikey
-  * room (name or id)
-
-  Two monitoring policies are defined
+  * apikey  
+  * room (name or id)  
 
 
+  Two policies are defined.  Each policy must have the following properties:
+  * name  
+  * query  
+  * min_count and/or max_count  
+  * polling_secs  
+
+
+  index is an optional property, if not defined, it will default to using 'logstash-*'.
+
+See the config.json.example file in the repo
 ```
 {
   "listen_address": "127.0.0.1:8080",
@@ -55,4 +70,5 @@ Configuration:
     "polling_secs": 300,
     "handlers": ["shell", "hipchat"]
   }]
-}```
+}
+```
