@@ -10,6 +10,8 @@ import (
 	"gopkg.in/olivere/elastic.v3"
 )
 
+const defaultIndex = "_all"
+
 // Policy represents a monitoring policy
 type Policy struct {
 	// Name of policy
@@ -67,7 +69,7 @@ func (c *controller) policyWorker(p *Policy) {
 	}
 	// assume logstash based indexes if not specified
 	if p.Index == "" {
-		p.Index = "logstash-*"
+		p.Index = defaultIndex
 		c.logf("event=set_default policy=%q index=%q\n", p.Name, p.Index)
 	}
 	ticker := time.NewTicker(time.Duration(p.FrequencySeconds) * time.Second)

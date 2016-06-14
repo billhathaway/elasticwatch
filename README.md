@@ -40,7 +40,7 @@ Configuration:
   * polling_secs  
 
 
-  index is an optional property, if not defined, it will default to using 'logstash-*'.
+  index is an optional property, if not defined, it will default to using '_all'.
 
 See the config.json.example file in the repo
 ```
